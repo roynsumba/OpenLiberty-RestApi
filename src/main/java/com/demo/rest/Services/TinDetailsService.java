@@ -7,7 +7,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.inject.Inject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import com.demo.rest.Models.Authentication;
 import com.demo.rest.Models.TinDetailsPayload;
 import com.demo.rest.Models.TinDetailsRequest;
 import com.demo.rest.Models.TinProfilePayload;
@@ -66,7 +65,7 @@ public class TinDetailsService {
 
     public TinProfilePayload FetchTinProfile(TinProfileRequest payload) throws Exception {
          // Create and populate the Authentication object
-        Authentication auth = new Authentication();
+        TinDetailsRequest auth = new TinDetailsRequest();
         auth.setUserName(cusername);
         auth.setPassword(cpassword);
         auth.setSignature(csignature);

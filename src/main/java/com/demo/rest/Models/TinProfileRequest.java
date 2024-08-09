@@ -4,15 +4,15 @@ import java.io.Serializable;
 
 public class TinProfileRequest implements Serializable  {
     
-    private Authentication authentication;
+    private TinDetailsRequest authentication;
     private String tinNo;
 
     // Getters and setters
-    public Authentication getAuthentication() {
+    public TinDetailsRequest getAuthentication() {
         return authentication;
     }
 
-    public void setAuthentication(Authentication authentication) {
+    public void setAuthentication(TinDetailsRequest authentication) {
         this.authentication = authentication;
     }
 
