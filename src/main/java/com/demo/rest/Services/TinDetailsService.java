@@ -26,8 +26,8 @@ public class TinDetailsService {
     @ConfigProperty(name = "tin.profile.api.url")
     private String tinProfileApiUrl; 
 
-    @Inject@ConfigProperty(name="tin.default.value")
-    private String configTin; 
+    // @Inject@ConfigProperty(name="tin.default.value")
+    // private String configTin; 
 
     @Inject
     @ConfigProperty(name="uName")
@@ -45,7 +45,7 @@ public class TinDetailsService {
         this.client = ClientBuilder.newClient();
     }
 
-    public TinDetailsPayload FetchTinDetails(String tin, TinDetailsRequest payload) throws Exception {
+    public TinDetailsPayload FetchTinDetails(String tin) throws Exception {
 
         TinDetailsRequest requestPayload = new TinDetailsRequest();
         requestPayload.setUserName(cusername);
@@ -55,15 +55,15 @@ public class TinDetailsService {
         System.out.println(cusername);
         System.out.println(cpassword);
         System.out.println(csignature);
-        System.out.println(configTin);
-        Response apiResponse = client.target(tinDetailsApiUrl + configTin)
+        System.out.println(tin);
+        Response apiResponse = client.target(tinDetailsApiUrl + tin)
                                      .request(MediaType.APPLICATION_JSON)
                                      .post(Entity.json(requestPayload));
 
         return apiResponse.readEntity(TinDetailsPayload.class);
     }
 
-    public TinProfilePayload FetchTinProfile(TinProfileRequest payload) throws Exception {
+    public TinProfilePayload FetchTinProfile(String tin) throws Exception {
          // Create and populate the Authentication object
         TinDetailsRequest auth = new TinDetailsRequest();
         auth.setUserName(cusername);
@@ -73,7 +73,7 @@ public class TinDetailsService {
         // Populate ReqPayload
         TinProfileRequest reqPayload = new TinProfileRequest();
         reqPayload.setAuthentication(auth);
-        reqPayload.setTinNo(configTin);
+        reqPayload.setTinNo(tin);
 
         Response apiResponse = client.target(tinProfileApiUrl)
                                      .request(MediaType.APPLICATION_JSON)

@@ -9,8 +9,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.inject.Inject;
-
-import com.demo.rest.Models.TinDetailsRequest;
 import com.demo.rest.Services.TinDetailsService;
 import com.demo.rest.Models.TinDetailsPayload;
 
@@ -26,9 +24,9 @@ public class TinDetailsResource {
     @Path("/tin/{tin}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTINDetails(@PathParam("tin") String tin, TinDetailsRequest payload) {
+    public Response getTINDetails(@PathParam("tin") String tin) {
         try {
-            TinDetailsPayload rpone = tinDetailsService.FetchTinDetails( tin, payload);
+            TinDetailsPayload rpone = tinDetailsService.FetchTinDetails(tin);
             return Response.ok(rpone).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
