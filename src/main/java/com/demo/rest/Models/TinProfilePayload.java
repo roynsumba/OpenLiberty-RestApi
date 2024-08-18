@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import com.demo.rest.Data.TinProfileData;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -13,10 +14,10 @@ public class TinProfilePayload implements Serializable {
 
 
     @JsonProperty("data")
-    private List<TinProfileDataItem> data;
+    private List<TinProfileData> data;
     private String message;
     private int statusCode;
-    public List<TinProfileDataItem> getData() {
+    public List<TinProfileData> getData() {
         return data;
     }
 
@@ -33,7 +34,7 @@ public class TinProfilePayload implements Serializable {
     } 
 
 
-    public void setData(List<TinProfileDataItem> data) {
+    public void setData(List<TinProfileData> data) {
         this.data = data;
     }
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2"
+    xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                        http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+    <persistence-unit name="TaxPU" transaction-type="JTA">
+        <jta-data-source>jdbc/PostgresDS</jta-data-source>
+        <properties>
+            <!-- <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/> -->
+              <property name="jakarta.persistence.schema-generation.database.action"
+                      value="create-or-extend-tables"/>
+            <property name="jakarta.persistence.schema-generation.scripts.action"
+                      value="create-or-extend-tables"/>
+            <property name="jakarta.persistence.schema-generation.scripts.create-target"
+                      value="createDDL.ddl"/>
+        </properties>
+    </persistence-unit>
+</persistence>
