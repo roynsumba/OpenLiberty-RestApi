@@ -5,6 +5,8 @@
     <featureManager>
         <feature>jakartaee-10.0</feature>
         <feature>microProfile-6.1</feature>
+         <feature>openidConnectClient-1.0</feature>
+        <!-- <feature>transportSecurity-1.0</feature>  -->
     </featureManager>
 
     <!-- This template enables security. To get the full use of all the capabilities, a keystore and user registry are required. -->
@@ -25,32 +27,99 @@
         <user name="yourUserName" password="" />
         -->
     </basicRegistry>
+
+    <!-- <openidConnectClient id="keycloak" 
+        clientId="openliberty-client"
+        clientSecret="WtBXZi1zngHkApkEAZHJZZrthPr8fhdz"
+        discoveryEndpointUrl="http://localhost:8080/realms/openliberty-realm/.well-known/openid-configuration"
+        signatureAlgorithm="RS256"
+        inboundPropagation="supported" /> -->
+
+         <!-- <openidConnectClient id="keycloak" 
+        clientId="openliberty-client"
+        clientSecret="WtBXZi1zngHkApkEAZHJZZrthPr8fhdz"
+        authorizationEndpointUrl="http://localhost:8080/realms/openliberty-realm/protocol/openid-connect/auth"
+    tokenEndpointUrl="http://localhost:8080/realms/openliberty-realm/protocol/openid-connect/token"
+        jwkEndpointUrl="http://localhost:8080/realms/openliberty-realm/protocol/openid-connect/certs"
+        signatureAlgorithm="RS256"
+        inboundPropagation="supported" 
+        httpsRequired="false"
+        issuerIdentifier="http://localhost:8080/realms/openliberty-realm"
+        />  -->
+
+
+         <!-- <openidConnectClient id="keycloak" 
+        clientId="openliberty-client"
+        clientSecret="WtBXZi1zngHkApkEAZHJZZrthPr8fhdz"
+        authorizationEndpointUrl="http://${database.serverNameDocker}:8080/realms/openliberty-realm/protocol/openid-connect/auth"
+        tokenEndpointUrl="http://${database.serverNameDocker}:8080/realms/openliberty-realm/protocol/openid-connect/token"
+        jwkEndpointUrl="http://${database.serverNameDocker}:8080/realms/openliberty-realm/protocol/openid-connect/certs"
+        signatureAlgorithm="RS256"
+        inboundPropagation="supported" 
+        httpsRequired="false"
+        issuerIdentifier="http://${database.serverNameDocker}:8080/realms/openliberty-realm"
+        /> -->
    
+
+        <openidConnectClient id="keycloak" 
+        clientId="openliberty-client"
+        clientSecret="WtBXZi1zngHkApkEAZHJZZrthPr8fhdz"
+        authorizationEndpointUrl="http://localhost:8080/realms/openliberty-realm/protocol/openid-connect/auth"
+        tokenEndpointUrl="http://quirky_rhodes:8080/realms/openliberty-realm/protocol/openid-connect/token"
+        jwkEndpointUrl="http://quirky_rhodes:8080/realms/openliberty-realm/protocol/openid-connect/certs"
+        signatureAlgorithm="RS256"
+        inboundPropagation="supported" 
+        httpsRequired="false"
+        issuerIdentifier="http://localhost:8080/realms/openliberty-realm" 
+        redirectToRPHostAndPort="http://localhost:9080"  
+      
+        />
 
 
     <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
     <httpEndpoint id="defaultHttpEndpoint"
-                  httpPort="9080"
-                  httpsPort="9443" /> 
+                  httpPort="9080" 
+                  httpsPort="-1"
+                  host="*"
+                   /> 
 
     <!-- Automatically expand WAR files and EAR files -->
     <applicationManager autoExpand="true"/>
 
     <!-- Configures the application on a specified context root -->
-    <webApplication contextRoot="/java-rest-app" location="java-rest-app.war" />
+    <webApplication contextRoot="/java-rest-app" location="java-rest-app.war">
+    
+    <application-bnd>
+            <security-role name="user">
+                <special-subject type="ALL_AUTHENTICATED_USERS" />
+            </security-role>
+        </application-bnd>
+    
+     </webApplication>
 
     <library id="PostgresLib">
-    <fileset dir="D:/java-rest-app/src/main/liberty/config/" includes="postgresql-42.7.3.jar"/>
+    <!-- <fileset dir="D:/java-rest-app/src/main/liberty/config/" includes="postgresql-42.7.3.jar"/> -->
+    <!-- dir="${server.config.dir}/lib" -->
+    <fileset dir="${server.config.dir}" includes="postgresql-42.7.3.jar"/>
 </library> 
 
-     <dataSource id="PostgresDS" jndiName="jdbc/PostgresDS">
+<dataSource id="PostgresDS" jndiName="jdbc/PostgresDS">
     <jdbcDriver libraryRef="PostgresLib"/>
     <properties.postgresql 
-        serverName="localhost" 
+        serverName="host.docker.internal" 
         databaseName="TaxDB" 
         user="postgres" 
         password="123"/>
 </dataSource>
+
+<!-- <dataSource id="PostgresDS" jndiName="${database.jndiName}">
+    <jdbcDriver libraryRef="PostgresLib"/>
+    <properties.postgresql 
+        serverName="${database.serverName}" 
+        databaseName="${database.databaseName}" 
+        user="${database.user}" 
+        password="${database.password}"/>
+</dataSource> -->
 
 
 

@@ -95,18 +95,8 @@ public class TinDetailsService {
      public TaxInfo getTaxInfo(int eventId) {
 
 
-        TaxInfo payloadEntity = taxDAO.readEvent(eventId);
-        if (payloadEntity != null) {
-            TaxInfo response = new TaxInfo();
-            response.setId(payloadEntity.getId());
-            response.setMessage(payloadEntity.getMessage());
-            response.settTaxPayerName(payloadEntity.getTaxPayerName());
-            response.setTaxPayerType(payloadEntity.getTaxPayerType());
-            response.setTinStatus(payloadEntity.getTinStatus());
-            response.setTin(payloadEntity.getTin());
-            return response;
-        }
-        return null;
+        return taxDAO.readEvent(eventId);
+
     } 
 
     @Transactional
@@ -153,60 +143,13 @@ public class TinDetailsService {
 }
     
     public TinProfilePayloadEntity getTinProfile(Long id) {
-        TinProfilePayloadEntity entity = tinProfileDAO.read(id);
-        if (entity != null) {
-            TinProfilePayloadEntity response = new TinProfilePayloadEntity();
-            response.setId(entity.getId());
-            response.setMessage(entity.getMessage());
-            response.setStatusCode(entity.getStatusCode());
-            List<TinProfileData> dataArray = new ArrayList<>(); 
-            TinProfileData dataObj = new TinProfileData();
-            for (TinProfileData data : entity.getData()) {
-
-                dataObj.setSurName(data.getSurName()); 
-                dataObj.setMiddleName(data.getMiddleName());
-                dataObj.setFirstName(data.getFirstName());
-                dataObj.setTaxPayerType(data.getTaxPayerType());
-                dataObj.setNin(data.getNin());
-                dataObj.setBirthDt(data.getBirthDt());
-                dataObj.setId(data.getId());
-            }
-            dataArray.add(dataObj);
-            response.setData(dataArray);
-            return response;
-        }
-        return null;
+       return tinProfileDAO.read(id);
     } 
         
         
         public List<TinProfilePayloadEntity> getTinProfiles() {     
-            List<TinProfilePayloadEntity> entities = tinProfileDAO.findAll(); 
-            List<TinProfilePayloadEntity> myList = new ArrayList<>();
-            if(entities != null)
-            {
-                for(TinProfilePayloadEntity entity : entities){
-                    TinProfilePayloadEntity response = new TinProfilePayloadEntity();
-                    response.setId(entity.getId());
-                    response.setMessage(entity.getMessage());
-                    response.setStatusCode(entity.getStatusCode());
-                    List<TinProfileData> dataArray = new ArrayList<>(); 
-                    TinProfileData dataObj = new TinProfileData();
-                    for (TinProfileData data : entity.getData()) {
-                        dataObj.setSurName(data.getSurName()); 
-                        dataObj.setMiddleName(data.getMiddleName());
-                        dataObj.setFirstName(data.getFirstName());
-                        dataObj.setTaxPayerType(data.getTaxPayerType());
-                        dataObj.setNin(data.getNin());
-                        dataObj.setBirthDt(data.getBirthDt());
-                        dataObj.setId(data.getId());
-                    }
-                    dataArray.add(dataObj);
-                    response.setData(dataArray);
-                    myList.add(response);
-                } 
-                return myList;
-            }
-            return null;
+            return tinProfileDAO.findAll(); 
+       
         }
 
 
@@ -262,5 +205,6 @@ public class TinDetailsService {
 
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(apiResponse.readEntity(String.class), TinProfilePayload.class);
+        // return apiResponse.readEntity(TinProfilePayload.class);
     }
 }

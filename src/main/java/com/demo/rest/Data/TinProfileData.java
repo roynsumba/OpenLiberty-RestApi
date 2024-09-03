@@ -1,5 +1,6 @@
 package com.demo.rest.Data;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.*;
 import java.io.Serializable;
 
@@ -16,6 +17,7 @@ public class TinProfileData implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "api_response_id")
+    @JsonbTransient
     private TinProfilePayloadEntity tinProfilePayload;
 
     @JsonProperty("SurName")

@@ -19,7 +19,7 @@ import com.demo.rest.Data.TaxInfo;
 import com.demo.rest.Models.TinDetailsPayload;
 
 
-@Path("/TINDetails")
+@Path("v1/tindetails")
 public class TinDetailsResource {
 
 
@@ -28,7 +28,7 @@ public class TinDetailsResource {
     
 
     @POST
-    @Path("/tin/{tin}")
+    @Path("/fetch-tin-details/{tin}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTINDetails(@PathParam("tin") String tin) {
@@ -44,7 +44,7 @@ public class TinDetailsResource {
     }
 
     @PUT
-    @Path("{id}")
+    @Path("/update-tin-details/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateEvent( TinDetailsPayload req, 
         @PathParam("id") int id) {
@@ -52,7 +52,9 @@ public class TinDetailsResource {
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
+    
     @GET
+    @Path("/all-tin-details")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEvents() {
         List<TaxInfo> events = tinDetailsService.getAllTaxInfo();
@@ -60,7 +62,7 @@ public class TinDetailsResource {
     }
 
     @GET
-    @Path("{id}")
+    @Path("/tin-details/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEvent(@PathParam("id") int eventId) {
         TaxInfo event = tinDetailsService.getTaxInfo(eventId);
@@ -68,7 +70,7 @@ public class TinDetailsResource {
     }
 
     @DELETE
-    @Path("{id}")
+    @Path("/delete-tin-details{id}")
     public Response deleteEvent(@PathParam("id") int id) {
         tinDetailsService.deleteTaxInfo(id);
         return Response.status(Response.Status.NO_CONTENT).build();

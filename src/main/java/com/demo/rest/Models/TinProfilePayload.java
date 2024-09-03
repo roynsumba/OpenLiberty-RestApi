@@ -22,9 +22,9 @@ public class TinProfilePayload implements Serializable {
     }
 
      @JsonProperty("errors")
-    private Map<String, Object> errors;  // Add this field to handle the errors
+    private Map<String, Object> errors;  
 
-    // Getters and setters for the new field
+    
     public Map<String, Object> getErrors() {
         return errors;
     }

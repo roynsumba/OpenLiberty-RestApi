@@ -7,13 +7,13 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 
 @RequestScoped
+@Transactional
 public class TinProfileDAO {
 
     @PersistenceContext(name = "TaxPU")
     private EntityManager entityManager;
 
 
-    @Transactional
     public void create(TinProfilePayloadEntity entity) {
         entityManager.persist(entity);
     }
@@ -26,7 +26,6 @@ public class TinProfileDAO {
         return entityManager.createNamedQuery("TinProfilePayloadEntity.findAll", TinProfilePayloadEntity.class).getResultList();
     }
 
-    @Transactional
     public void update(TinProfilePayloadEntity entity) {
         entityManager.merge(entity);
     }

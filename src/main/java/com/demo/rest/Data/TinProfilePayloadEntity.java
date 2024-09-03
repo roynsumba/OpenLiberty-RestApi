@@ -14,8 +14,7 @@ public class TinProfilePayloadEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-  
-    @JsonProperty("data")
+// @JsonProperty("data")  
     @OneToMany(mappedBy = "tinProfilePayload", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TinProfileData> data;
 

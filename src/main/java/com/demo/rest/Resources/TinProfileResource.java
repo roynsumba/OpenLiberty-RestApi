@@ -9,6 +9,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import com.demo.rest.Services.TinDetailsService;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 import com.demo.rest.Data.TinProfilePayloadEntity;
 import com.demo.rest.Models.TinProfilePayload;
 
-@Path("/TINRegistration")
+@Path("v1/tinprofile")
 public class TinProfileResource {
 
 
@@ -24,7 +25,7 @@ public class TinProfileResource {
     private TinDetailsService tinDetailsService;
 
     @POST
-    @Path("/get-tin-profile/{tin}")
+    @Path("/fetch-tin-profile/{tin}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTINDetails2(@PathParam("tin") String tin) {
@@ -41,7 +42,7 @@ public class TinProfileResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/tin-profile-details/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTinProfile(@PathParam("id") Long id) {
         TinProfilePayloadEntity profile = tinDetailsService.getTinProfile(id);
@@ -50,6 +51,8 @@ public class TinProfileResource {
     }
 
     @GET
+    @RolesAllowed("user") 
+    @Path("/all-tin-profile-details")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllTinProfiles() {
         List<TinProfilePayloadEntity> profiles = tinDetailsService.getTinProfiles();
@@ -57,7 +60,7 @@ public class TinProfileResource {
     } 
 
     @PUT
-    @Path("/{id}")
+    @Path("/update-tin-profile-details/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public void updateTinProfile(@PathParam("id") Long id, TinProfilePayloadEntity payload) {
@@ -66,7 +69,7 @@ public class TinProfileResource {
      }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/delete-tin-profile/{id}")
     public Response deleteTinProfile(@PathParam("id") Long id) {
         tinDetailsService.deleteTinProfile(id);
         return Response.noContent().build();

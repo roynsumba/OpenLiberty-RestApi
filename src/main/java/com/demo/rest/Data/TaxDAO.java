@@ -11,16 +11,15 @@ import jakarta.transaction.Transactional;
 import jakarta.enterprise.context.RequestScoped;
 
 @RequestScoped
+@Transactional
 public class TaxDAO {
 
     @PersistenceContext(name = "TaxPU")
     private EntityManager em;
 
-    @Transactional
     public void createEvent(TaxInfo event) {
         em.persist(event);
     }
-
 
     public TaxInfo readEvent(int eventId) {
         return em.find(TaxInfo.class, eventId);
