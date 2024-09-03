@@ -3,7 +3,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+// import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "tin_profile_info")
